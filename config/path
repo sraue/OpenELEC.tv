@@ -11,6 +11,11 @@ case $TARGET_ARCH in
   x86_64)
     TARGET_FAMILY=x86_64
     ;;
+
+  arm)
+    TARGET_FAMILY=arm
+    TARGET_ABI=eabi
+    ;;
 esac
 
 # determines TARGET_CPU, if not forced by user
@@ -23,10 +28,14 @@ if [ -z "$TARGET_CPU" ]; then
     x86_64)
       TARGET_CPU=i686
       ;;
+
+    arm)
+      TARGET_CPU=cortex-a8
+      ;;
   esac
 fi
 
-TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu
+TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu$TARGET_ABI
 
 OPENELEC_SRC=http://sources.openelec.tv/src/$OPENELEC_VERSION
 CONFIG=config
@@ -153,6 +162,12 @@ case $TARGET_ARCH in
      TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -march=$TARGET_CPU -m64 -fexcess-precision=fast"
      TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -march=$TARGET_CPU -m64 -fexcess-precision=fast"
      ;;
+    arm)
+     TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -mcpu=$TARGET_CPU -mtune=$TARGET_CPU -fexcess-precision=fast"
+     [ "$NEON" = yes ] && TARGET_CFLAGS="$TARGET_CFLAGS -mfpu=neon -mfloat-abi=softfp"
+     TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -mcpu=$TARGET_CPU -mtune=$TARGET_CPU -fexcess-precision=fast"
+     [ "$NEON" = yes ] && TARGET_CXXFLAGS="$TARGET_CXXFLAGS -mfpu=neon -mfloat-abi=softfp"
+     ;;
 esac
 
 if [ "$DEBUG" = yes ]; then
@@ -182,6 +197,14 @@ HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib"
 HOST_PKG_CONFIG_PATH=""
 HOST_PKG_CONFIG_LIBDIR="$ROOT/$TOOLCHAIN/lib/pkgconfig:$ROOT/$TOOLCHAIN/share/pkgconfig"
 HOST_PKG_CONFIG_SYSROOT_DIR=""
+
+# use -fPIC when necessary
+  case "`uname -m`" in
+    x86_64|ppc64|arm|armeb|armel)
+    HOST_CFLAGS="$HOST_CFLAGS -fPIC"
+    HOST_CXXFLAGS="$HOST_CXXFLAGS -fPIC"
+    ;;
+  esac
 
 export CCACHE_DIR=$ROOT/$BUILD/.ccache
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
