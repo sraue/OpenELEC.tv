@@ -46,5 +46,5 @@ make install
 
 # add a link named 'strip' in the toolchain, it overrides the host
 # 'strip' with `install -s`
-  ln -s $TARGET_NAME-strip $ROOT/$TOOLCHAIN/bin/strip
+#  ln -s $TARGET_NAME-strip $ROOT/$TOOLCHAIN/bin/strip
 
