@@ -17,4 +17,8 @@ cd $BUILD/busybox*
   cp $BUSYBOX_CFG_FILE .config
   make oldconfig
 
-  ARCH=$TARGET_ARCH make install
+  make HOSTCC="$HOST_CC" \
+       ARCH=$TARGET_ARCH \
+       CROSS_COMPILE="$TARGET_PREFIX" \
+       EXTRA_CFLAGS="$CFLAGS" \
+       V=1 install
