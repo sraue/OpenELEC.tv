@@ -2,6 +2,13 @@
 
 . config/options $1
 
+if [ "$TARGET_ARCH" = arm ]; then
+  [ "$NEON" = yes ] && CFG_NEON="--enable-arm-neon" || CFG_NEON="--disable-arm-neon"
+  ARCH_CONFIG="--disable-mmx --disable-sse2 --disable-vmx --enable-arm-simd $CFG_NEON"
+elif [ "$TARGET_ARCH" = i386 -o "$TARGET_ARCH" = x86_64  ]; then
+  ARCH_CONFIG="--enable-mmx --enable-sse2 --disable-vmx --disable-arm-simd --disable-arm-neon"
+fi
+
 cd $PKG_BUILD
 ./configure --host=$TARGET_NAME \
             --build=$HOST_NAME \
@@ -11,11 +18,7 @@ cd $PKG_BUILD
             --enable-shared \
             --disable-static \
             --disable-openmp \
-            --enable-mmx \
-            --enable-sse2 \
-            --disable-vmx \
-            --disable-arm-simd \
-            --disable-arm-neon \
+            $ARCH_CONFIG \
             --enable-gcc-inline-asm \
             --disable-timers \
             --disable-gtk \
