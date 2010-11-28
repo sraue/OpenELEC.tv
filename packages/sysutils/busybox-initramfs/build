@@ -22,16 +22,9 @@ cd $BUILD/busybox*
   cp $BUSYBOX_CFG_FILE .config
   make oldconfig
 
-<<<<<<< HEAD
-  make HOSTCC="$HOST_CC" \
-       ARCH=$TARGET_ARCH \
-       CROSS_COMPILE="$TARGET_PREFIX" \
-       EXTRA_CFLAGS="$CFLAGS" \
-       V=1 install
-=======
   make ARCH=$TARGET_ARCH \
        HOSTCC=$HOST_CC \
        CROSS_COMPILE=$TARGET_PREFIX \
        KBUILD_VERBOSE="1" \
        install
->>>>>>> master
+

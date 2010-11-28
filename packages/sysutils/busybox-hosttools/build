@@ -11,15 +11,7 @@ cd $BUILD/busybox*
   cp $ROOT/$PKG_DIR/config/$1.conf .config
   make oldconfig
 
-<<<<<<< HEAD
-  make HOSTCC="$HOST_CC" \
-       ARCH=$TARGET_ARCH \
-       CROSS_COMPILE="" \
-       EXTRA_CFLAGS="$CFLAGS" \
-       V=1 install
-=======
   ARCH=$TARGET_ARCH make CROSS_COMPILE="" KBUILD_VERBOSE="1" install
->>>>>>> master
 
   mkdir -p $ROOT/$TOOLCHAIN/bin
     cp -R _install-hosttools/bin/* $ROOT/$TOOLCHAIN/bin
