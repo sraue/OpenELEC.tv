@@ -33,9 +33,6 @@ if [ -z "$TARGET_CPU" ]; then
   esac
 fi
 
-<<<<<<< HEAD
-TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu$TARGET_ABI
-=======
 # setup initial directorys
   CONFIG=config
   SCRIPTS=scripts
@@ -46,8 +43,7 @@ TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu$TARGET_ABI
   ADDONS=addons
 
 HOST_NAME=`$SCRIPTS/configtools/config.guess`
-TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu
->>>>>>> master
+TARGET_NAME=$TARGET_FAMILY-openelec-linux-gnu$TARGET_ABI
 
 OPENELEC_SRC=http://sources.openelec.tv/src/$OPENELEC_VERSION
 BUILD=$BUILD_BASE.OpenELEC-$PROJECT.$TARGET_ARCH.$OPENELEC_VERSION
