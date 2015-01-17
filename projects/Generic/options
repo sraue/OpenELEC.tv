@@ -102,3 +102,6 @@
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
     FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
 
+  # Amlogic IR remote support (yes / no)
+    AMREMOTE_SUPPORT="no"
+
