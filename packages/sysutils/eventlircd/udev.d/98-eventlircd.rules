@@ -172,6 +172,10 @@ ENV{ID_VENDOR_ID}=="0471", ENV{ID_MODEL_ID}=="20cc", \
   ENV{eventlircd_enable}="true", \
   ENV{eventlircd_evmap}="spinelplus.evmap"
 
+ENV{ID_VENDOR_ID}=="2252", ENV{ID_MODEL_ID}=="0106", \
+  ENV{eventlircd_enable}="true", \
+  ENV{eventlircd_evmap}="wetek.evmap"
+
 # Enable wake-on-usb for the USB remotes.
   RUN+="wakeup_enable"
 
